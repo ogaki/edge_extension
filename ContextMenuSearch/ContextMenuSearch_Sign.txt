@@ -1,0 +1,27 @@
+﻿### make pacage .apx
+
+makeappx pack /d c:\users\norit\Documents\ContextMenuSearch\edgeextension\manifest /p c:\users\norit\Documents\ContextMenuSearch\edgeextension\package\
+
+
+### make .cer
+
+MakeCert -r -pe -ss PrivateCertStore -n "CN=6DB55949-05F0-495D-BCF2-EC7A448AAEAC" C:\Users\norit\Documents\ContextMenuSearch.cer
+
+
+### make .pvk
+
+MakeCert /n "CN=6DB55949-05F0-495D-BCF2-EC7A448AAEAC" /r /h 0 /eku "1.3.6.1.5.5.7.3.3,1.3.6.1.4.1.311.10.3.13" /e "12/31/2017" /sv C:\Users\norit\Documents\ContextMenuSearch.pvk C:\Users\norit\Documents\ContextMenuSearch.cer
+
+### entry .pvk to root-cert
+
+makecert -sk ContextMenuSearch -iv C:\Users\norit\Documents\ContextMenuSearch.pvk -n "CN=ContextMenuSearch" -ic C:\Users\norit\Documents\ContextMenuSearch.cer -sr currentuser -ss My
+
+
+### convert pvk to pfx
+
+pvk2pfx /pvk C:\Users\norit\Documents\ContextMenuSearch.pvk /spc C:\Users\norit\Documents\ContextMenuSearch.cer
+
+
+### singing package
+
+SignTool sign /fd SHA256 /a /f C:\Users\norit\Documents\ContextMenuSearch.pfx /p ym54n121 C:\Users\norit\Documents\ContextMenuSearch\edgeextension\package\package.appx

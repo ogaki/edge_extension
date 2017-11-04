@@ -1,0 +1,22 @@
+{
+    "default_locale": "en",
+    "author": "Noritoshi Ogaki",
+    "name": "Context Menu Search",
+    "description": "Add a context menu item to search the web.",
+    "version": "1.0",
+    "icons": {
+        "24": "icons/24x24.png",
+        "48": "icons/48x48.png"
+    },
+    "options_page" : "options.html",
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "permissions": [
+        "activeTab",
+        "contextMenus"
+    ]
+}
