@@ -1,32 +1,54 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="options.css" />
+  <meta charset="UTF-8">
+  <title>ContextMenuSearch Option</title>
+  <link rel="stylesheet" href="options.css">
+  <script type="text/javascript">
+    var rowNumber = 0;
+    function addRow() {
+      var tableRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+      console.log("rows=" + tableRef.rows.length);
+      var newRow = tableRef.insertRow(tableRef.rows.length);
+      rowNumber++;
+      var temp =
+        '<td><input class="table-text" type="text" name="title" value="[Search Engine]" /></td>'
+        + '<td><input class="table-text" type="text" name="url" value="https://" /></td>'
+        + '<td><input class="table-button" type="button" onclick="delRow(' + rowNumber
+        + ');" value="' //+ rowNumber
+        + '-" /></td>';
+      newRow.insertAdjacentHTML('afterbegin', temp);
+      newRow.setAttribute("id", "rowId=" + rowNumber);
+      //console.log("rowIndex=" + newRow.rowIndex);
+    }
+    function delRow(rowId) {
+      //console.log("delRow:" + rowId);
+      var tableRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+      var rowRef = document.getElementById('rowId=' + rowId);
+      tableRef.deleteRow(rowRef.rowIndex);
+    }
+  </script>
 </head>
 
 <body>
-  <section>
-    <div class="title">Search Engine:</div>
+  <h1>Search Engine Setting</h1>
 
-    <div id="grid">
-      <input id="c1r1" type="checkbox" checked="true" datatype="c1" />
-      <div id="c2r1">Google:</div>
-      <input id="c3r1" type="text" value="https://www.google.com/search?q=" datatype="t1" />
-      <input id="c1r2" type="checkbox" checked="true" datatype="c2" />
-      <div id="c2r2">Bing:</div>
-      <input id="c3r2" type="text" value="https://www.bing.com/search?q=" datatype="t2" />
-      <input id="c1r3" type="checkbox" checked="true" datatype="c3" />
-      <div id="c2r3">DuckDuckGo:</div>
-      <input id="c3r3" type="text" value="https://www.duckduckgo.com/?q=" datatype="t3" />
-    </div>
-  </section>
+  <table id="table">
+    <tr>
+      <th style="width:200px">Name</th>
+      <th style="width:200px">Value</th>
+      <th style="width:20px">
+        <input class="table-button" type="button" onclick="addRow();" value="+" />
+      </th>
+    </tr>
+    <tr>
+    </tr>
+  </table>
 
-  <input type="button" value="Save preferences" id="save-button" />
+  <button id="save-btn">Save</button>
+  <script src='options.js'></script>
 
-  <script src="options.js"></script>
 </body>
 
 </html>
