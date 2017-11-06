@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=10">  
   <title>ContextMenuSearch Option</title>
   <link rel="stylesheet" href="options.css">
   <script src="html2json.js"></script>
@@ -13,7 +12,7 @@
   <script type="text/javascript">
     var rowNumber = 0;
     function addRow() {
-      var tableRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+      var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
       console.log("rows=" + tableRef.rows.length);
       var newRow = tableRef.insertRow(tableRef.rows.length);
       rowNumber++;
@@ -29,12 +28,12 @@
     }
     function delRow(rowId) {
       //console.log("delRow:" + rowId);
-      var tableRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+      var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
       var rowRef = document.getElementById('rowId=' + rowId);
       tableRef.deleteRow(rowRef.rowIndex);
     }
     function save() {
-      var tableRef = document.getElementById('table');
+      var tableRef = document.getElementById('table');//.getElementsByTagName('tr')[1];
       var json = html2json(tableRef.innerHTML);
       console.log('***save data***');
       console.log(JSON.stringify(json));
@@ -56,8 +55,6 @@
         <input class="table-button" type="button" onclick="addRow();" value="+" />
       </th>
     </tr>
-    <tr>
-    </tr>
   </table>
 
   <button id="save-btn" onclick="save();">Save</button>
@@ -66,13 +63,17 @@
     if (window.localStorage) {
       var data = JSON.parse(window.localStorage.data); // Convert the object string back to a JavaScript object.
       console.log('***load data***');
-      console.log(data);
       if (data) {
         var html = json2html(data);
         console.log(html);
-        var tableRef = document.getElementById('table').getElementsByTagName('tr')[0];
-        tableRef.remove;
-        tableRef.insertAdjacentHTML('afterbegin', html);
+        var tableRef = document.getElementById('table');
+        var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+        tableRef.removeChild(tbodyRef);
+/*         var iy = tableRef.rows.length;
+        for(var ix=0; ix<iy; ix++) {
+          tableRef.deleteRow(0);
+        }
+ */        tableRef.insertAdjacentHTML('afterbegin', html);
       }
     }
   </script>
