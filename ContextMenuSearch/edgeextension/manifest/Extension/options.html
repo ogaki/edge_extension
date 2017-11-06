@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <title>ContextMenuSearch Option</title>
   <link rel="stylesheet" href="options.css">
+  <script src="html2json.js"></script>
+  <script src="htmlparser.js"></script>
+  
+
   <script type="text/javascript">
     var rowNumber = 0;
     function addRow() {
@@ -28,6 +32,14 @@
       var rowRef = document.getElementById('rowId=' + rowId);
       tableRef.deleteRow(rowRef.rowIndex);
     }
+    function save() {
+      var tableRef = document.getElementById('table');
+      var json = html2json(tableRef.innerHTML);
+      console.log('***save data***');
+      console.log(JSON.stringify(json));
+      window.localStorage.clear();
+      window.localStorage.setItem('data', json);
+    }
   </script>
 </head>
 
@@ -46,8 +58,25 @@
     </tr>
   </table>
 
-  <button id="save-btn">Save</button>
-  <script src='options.js'></script>
+  <button id="save-btn" onclick="save();">Save</button>
+  <script type="text/javascript">
+    /* load data */
+    var data;
+    if (window.localStorage && (data = window.localStorage('data'))) {
+      console.error('no storage');
+    } else {
+      console.log('***load data***');
+      console.log(data);
+      //var data = window.localStorage.getItem('data');
+      if (data) {
+        var html = json2html(data);
+        console.log(html);
+        var tableRef = document.getElementById('table').getElementsByTagName('tr')[0];
+        tableRef.remove;
+        tableRef.insertAdjacentHTML('afterbegin', html);
+      }
+    }
+  </script>
 
 </body>
 
