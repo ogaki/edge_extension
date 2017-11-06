@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=10">  
   <title>ContextMenuSearch Option</title>
   <link rel="stylesheet" href="options.css">
   <script src="html2json.js"></script>
@@ -37,8 +38,9 @@
       var json = html2json(tableRef.innerHTML);
       console.log('***save data***');
       console.log(JSON.stringify(json));
-      window.localStorage.clear();
-      window.localStorage.setItem('data', json);
+      if (!!window.localStorage) {
+        window.localStorage.data = JSON.stringify(json); // Convert the object to a string.
+      }
     }
   </script>
 </head>
@@ -61,13 +63,10 @@
   <button id="save-btn" onclick="save();">Save</button>
   <script type="text/javascript">
     /* load data */
-    var data;
-    if (window.localStorage && (data = window.localStorage('data'))) {
-      console.error('no storage');
-    } else {
+    if (window.localStorage) {
+      var data = JSON.parse(window.localStorage.data); // Convert the object string back to a JavaScript object.
       console.log('***load data***');
       console.log(data);
-      //var data = window.localStorage.getItem('data');
       if (data) {
         var html = json2html(data);
         console.log(html);
