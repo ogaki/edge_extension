@@ -2,6 +2,10 @@
   width: 20px;
 }
 
-.table-text {
+.table-title {
   width: 200px;
+}
+
+.table-url {
+  width: 300px;
 }

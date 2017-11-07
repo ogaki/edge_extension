@@ -10,11 +10,11 @@ function addRow(_title, _url) {
   console.log("rows=" + tableRef.rows.length);
   var newRow = tableRef.insertRow(tableRef.rows.length);
   rowNumber++;
-  if (!_title) _title = "[NAME]";
-  if (!_url) _url = "[URL ex. https://www.google.com/search?=%s]";
+  if (!_title || _title.trim.length == 0) _title = "[NAME]";
+  if (!_url || _url.trim.length == 0) _url = "[URL ex. https://www.google.com/search?=%s]";
   var temp =
-    '<td><input class="table-text" type="text" name="title" value="' + _title + '" /></td>'
-    + '<td><input class="table-text" type="text" name="url" value="' + _url + '" /></td>'
+    '<td><input class="table-title" type="text" name="title" value="' + _title + '" /></td>'
+    + '<td><input class="table-url" type="text" name="url" value="' + _url + '" /></td>'
     + '<td><input class="table-button" type="button" onclick="delRow(' + rowNumber
     + ');" value="' //+ rowNumber
     + '-" /></td>';
@@ -38,9 +38,10 @@ function save() {
   }
 }
 function load() {
+  console.log('***load data***');
   var data;
-  if (window.localStorage && (data = JSON.parse(window.localStorage.data))) {
-    //console.log('***load data***');
+  if (window.localStorage.data) {
+    data = JSON.parse(window.localStorage.data);
     var html = json2html(data);
     //console.log(html);
     var tableRef = document.getElementById('table');
@@ -48,8 +49,12 @@ function load() {
     tableRef.removeChild(tbodyRef);
     tableRef.insertAdjacentHTML('afterbegin', html);
   } else {
+    var _title;
+    var _url;
     for (var ix = 0; ix < default_options.length; ix++) {
-      addRow(default_options[ix][0], default_options[ix][1]);
+      _title = default_options[ix][0];
+      _url = default_options[ix][1];
+      addRow(_title, _url);
     }
   }
 }

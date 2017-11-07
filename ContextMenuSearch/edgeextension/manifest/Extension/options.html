@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="options.css">
   <script src="./libs/html2json.js"></script>
   <script src="./libs/htmlparser.js"></script>
-  <script src="./options.js"></script>
+  <script src="options.js"></script>
 </head>
 
 <body>
@@ -16,18 +16,16 @@
   <table id="table">
     <tr>
       <th style="width:200px">Name</th>
-      <th style="width:200px">Value</th>
+      <th style="width:300px">Value</th>
       <th style="width:20px">
-        <input class="table-button" type="button" onclick="addRow(null,null);" value="+" />
+        <button id="add-row-btn" class="table-button">+</button>
       </th>
     </tr>
   </table>
 
-  <button id="save-btn" onclick="save();">Save</button>
+  <button id="save-btn">Save</button>
 
-  <script type="text/javascript">
-    load();
-  </script>
+  <script src="options_load.js"></script>
 
 </body>
 

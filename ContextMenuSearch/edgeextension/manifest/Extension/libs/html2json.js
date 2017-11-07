@@ -4,7 +4,7 @@
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
     //require('../lib/Pure-JavaScript-HTML5-Parser/htmlparser.js');
-    require('./htmlparser.js');
+    require('../libs/htmlparser.js');
   }
 
   function q(v) {
