@@ -24,7 +24,7 @@ function addRow(_title, _url) {
   newRow.setAttribute("id", "rowId=" + rowNumber);
   var btn_ = document.getElementById('btn_' + rowNumber);
   if (btn_) {
-    btn_.addEventListener("click", function() {
+    btn_.addEventListener("click", function () {
       var btnId = String(btn_.getAttribute("id"));
       var rowId = btnId.replace('btn_', 'rowId=');
       delRow(rowId);
@@ -57,6 +57,7 @@ function load() {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     tableRef.removeChild(tbodyRef);
     tableRef.insertAdjacentHTML('afterbegin', html);
+    //TODO: addEventListener for addrow/delrow button
   } else {
     var _title;
     var _url;
@@ -66,4 +67,10 @@ function load() {
       addRow(_title, _url);
     }
   }
+  var btn1 = document.getElementById('add-row-btn');
+  btn1.addEventListener("click", function () {
+    addRow('', '')
+  });
+  var btn2 = document.getElementById('save-btn');
+  btn2.addEventListener("click", save);
 }
