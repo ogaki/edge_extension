@@ -3,45 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>ContextMenuSearch Option</title>
+  <title>Context Menu Search Option</title>
   <link rel="stylesheet" href="options.css">
-  <script src="html2json.js"></script>
-  <script src="htmlparser.js"></script>
-  
-
-  <script type="text/javascript">
-    var rowNumber = 0;
-    function addRow() {
-      var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
-      console.log("rows=" + tableRef.rows.length);
-      var newRow = tableRef.insertRow(tableRef.rows.length);
-      rowNumber++;
-      var temp =
-        '<td><input class="table-text" type="text" name="title" value="[Search Engine]" /></td>'
-        + '<td><input class="table-text" type="text" name="url" value="https://" /></td>'
-        + '<td><input class="table-button" type="button" onclick="delRow(' + rowNumber
-        + ');" value="' //+ rowNumber
-        + '-" /></td>';
-      newRow.insertAdjacentHTML('afterbegin', temp);
-      newRow.setAttribute("id", "rowId=" + rowNumber);
-      //console.log("rowIndex=" + newRow.rowIndex);
-    }
-    function delRow(rowId) {
-      //console.log("delRow:" + rowId);
-      var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
-      var rowRef = document.getElementById('rowId=' + rowId);
-      tableRef.deleteRow(rowRef.rowIndex);
-    }
-    function save() {
-      var tableRef = document.getElementById('table');//.getElementsByTagName('tr')[1];
-      var json = html2json(tableRef.innerHTML);
-      console.log('***save data***');
-      console.log(JSON.stringify(json));
-      if (!!window.localStorage) {
-        window.localStorage.data = JSON.stringify(json); // Convert the object to a string.
-      }
-    }
-  </script>
+  <script src="./libs/html2json.js"></script>
+  <script src="./libs/htmlparser.js"></script>
+  <script src="./options.js"></script>
 </head>
 
 <body>
@@ -52,30 +18,15 @@
       <th style="width:200px">Name</th>
       <th style="width:200px">Value</th>
       <th style="width:20px">
-        <input class="table-button" type="button" onclick="addRow();" value="+" />
+        <input class="table-button" type="button" onclick="addRow(null,null);" value="+" />
       </th>
     </tr>
   </table>
 
   <button id="save-btn" onclick="save();">Save</button>
+
   <script type="text/javascript">
-    /* load data */
-    if (window.localStorage) {
-      var data = JSON.parse(window.localStorage.data); // Convert the object string back to a JavaScript object.
-      console.log('***load data***');
-      if (data) {
-        var html = json2html(data);
-        console.log(html);
-        var tableRef = document.getElementById('table');
-        var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-        tableRef.removeChild(tbodyRef);
-/*         var iy = tableRef.rows.length;
-        for(var ix=0; ix<iy; ix++) {
-          tableRef.deleteRow(0);
-        }
- */        tableRef.insertAdjacentHTML('afterbegin', html);
-      }
-    }
+    load();
   </script>
 
 </body>
