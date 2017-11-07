@@ -12,11 +12,11 @@ var addListener = function (elm, type, func) {
 };
 */
 var init = function () {
+    load();
     var btn1 = document.getElementById('add-row-btn');
-    btn1.addEventListener("click",addRow);
+    btn1.addEventListener("click",addRow('??','??'));
     var btn2 = document.getElementById('save-btn');
     btn2.addEventListener("click",save);
-    load();
 };
 
 //addListener(window, "load", init);

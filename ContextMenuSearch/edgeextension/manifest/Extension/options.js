@@ -10,22 +10,31 @@ function addRow(_title, _url) {
   console.log("rows=" + tableRef.rows.length);
   var newRow = tableRef.insertRow(tableRef.rows.length);
   rowNumber++;
-  if (!_title || _title.trim.length == 0) _title = "[NAME]";
-  if (!_url || _url.trim.length == 0) _url = "[URL ex. https://www.google.com/search?=%s]";
+  var __title = String(_title);
+  var __url = String(_url);
+  //if (__title.trim.length == 0) __title = "[NAME]";
+  //if (__url.trim.length == 0) __url = "[URL ex. https://www.google.com/search?=%s]";
   var temp =
-    '<td><input class="table-title" type="text" name="title" value="' + _title + '" /></td>'
-    + '<td><input class="table-url" type="text" name="url" value="' + _url + '" /></td>'
-    + '<td><input class="table-button" type="button" onclick="delRow(' + rowNumber
-    + ');" value="' //+ rowNumber
-    + '-" /></td>';
+    '<td><input class="table-title" type="text" name="title" value="' + __title + '" /></td>'
+    + '<td><input class="table-url" type="text" name="url" value="' + __url + '" /></td>'
+    + '<td><button class="table-button" id="btn_' + rowNumber + '">-'
+    + rowNumber
+    + '</button></td>';
   newRow.insertAdjacentHTML('afterbegin', temp);
   newRow.setAttribute("id", "rowId=" + rowNumber);
-  //console.log("rowIndex=" + newRow.rowIndex);
+  var btn_ = document.getElementById('btn_' + rowNumber);
+  if (btn_) {
+    btn_.addEventListener("click", function() {
+      var btnId = String(btn_.getAttribute("id"));
+      var rowId = btnId.replace('btn_', 'rowId=');
+      delRow(rowId);
+    });
+  }
 }
 function delRow(rowId) {
-  //console.log("delRow:" + rowId);
+  console.log("delRow:" + rowId);
   var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
-  var rowRef = document.getElementById('rowId=' + rowId);
+  var rowRef = document.getElementById(rowId); //'rowId=' + rowId);
   tableRef.deleteRow(rowRef.rowIndex);
 }
 function save() {
