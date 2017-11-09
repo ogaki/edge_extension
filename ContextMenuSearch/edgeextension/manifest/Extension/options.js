@@ -3,22 +3,32 @@ var default_options = [
   ['bing', 'https://www.bing.com/search?q=%s'],
   ['duckduckgo', 'https://www.duckduckgo.com/?q=%s']];
 
-var rowNumber = 0;
-
 function addRow(_title, _url) {
   var tableRef = document.getElementById('table'); //.getElementsByTagName('tbody')[0];
   console.log("rows=" + tableRef.rows.length);
   var newRow = tableRef.insertRow(tableRef.rows.length);
-  rowNumber++;
   var __title = String(_title);
   var __url = String(_url);
-  //if (__title.trim.length == 0) __title = "[NAME]";
-  //if (__url.trim.length == 0) __url = "[URL ex. https://www.google.com/search?=%s]";
+  var btn = tableRef.getElementsByClassName('table-del-btn');
+  var btn_b = [];
+  if (btn.length == 0) {
+    btn_b[0] = 0;
+  } else {
+    var btn_a = [];
+    for (var ix = 0; ix < btn.length; ix++) {
+      if (btn[ix].id.startsWith('btn_')) {
+        var nm = btn[ix].id.substr(4);
+        btn_a.push(parseInt(nm));
+      }
+    }
+    btn_b = btn_a.reverse();
+    console.log(btn_b);
+  }
+  var rowNumber = btn_b[0] + 1;
   var temp =
     '<td><input class="table-title" type="text" name="title" value="' + __title + '" /></td>'
     + '<td><input class="table-url" type="text" name="url" value="' + __url + '" /></td>'
-    + '<td><button class="table-button" id="btn_' + rowNumber + '">-'
-    + rowNumber
+    + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' //+ rowNumber 
     + '</button></td>';
   newRow.insertAdjacentHTML('afterbegin', temp);
   newRow.setAttribute("id", "rowId=" + rowNumber);
@@ -42,10 +52,16 @@ function save() {
   var json = html2json(tableRef.innerHTML);
   console.log('***save data***');
   console.log(JSON.stringify(json));
-  if (!!window.localStorage) {
-    window.localStorage.data = JSON.stringify(json); // Convert the object to a string.
+  if (window.localStorage) {
+    window.localStorage.data = JSON.stringify(json);
   }
+  var getting = browser.runtime.getBackgroundPage(onGot);
 }
+
+function onGot(page) {
+  page.createContextMenu();
+}
+
 function load() {
   console.log('***load data***');
   var data;
@@ -57,7 +73,6 @@ function load() {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     tableRef.removeChild(tbodyRef);
     tableRef.insertAdjacentHTML('afterbegin', html);
-    //TODO: addEventListener for addrow/delrow button
   } else {
     var _title;
     var _url;
@@ -74,3 +89,22 @@ function load() {
   var btn2 = document.getElementById('save-btn');
   btn2.addEventListener("click", save);
 }
+
+/*
+function logStorageChange(changes, areaName) {
+  console.log("Change in storage area: " + areaName);
+  var changedItems = Object.keys(changes);
+  for (var item of changedItems) {
+    console.log(item + " has changed:");
+    console.log("Old value: ");
+    console.log(changes[item].oldValue);
+    console.log("New value: ");
+    console.log(changes[item].newValue);
+    //createContextMenu();
+    browser.extension.getBackgroundPage(function (page) {
+      page.createContextMenu();
+    });
+  }
+}
+browser.storage.onChanged.addListener(logStorageChange);
+*/
