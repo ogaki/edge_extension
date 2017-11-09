@@ -28,7 +28,7 @@ function addRow(_title, _url) {
   var temp =
     '<td><input class="table-title" type="text" name="title" value="' + __title + '" /></td>'
     + '<td><input class="table-url" type="text" name="url" value="' + __url + '" /></td>'
-    + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' //+ rowNumber 
+    + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' + rowNumber 
     + '</button></td>';
   newRow.insertAdjacentHTML('afterbegin', temp);
   newRow.setAttribute("id", "rowId=" + rowNumber);
@@ -52,9 +52,9 @@ function save() {
   var json = html2json(tableRef.innerHTML);
   console.log('***save data***');
   console.log(JSON.stringify(json));
-  if (window.localStorage) {
+  //if (window.localStorage) {
     window.localStorage.data = JSON.stringify(json);
-  }
+  //}
   var getting = browser.runtime.getBackgroundPage(onGot);
 }
 
@@ -89,22 +89,3 @@ function load() {
   var btn2 = document.getElementById('save-btn');
   btn2.addEventListener("click", save);
 }
-
-/*
-function logStorageChange(changes, areaName) {
-  console.log("Change in storage area: " + areaName);
-  var changedItems = Object.keys(changes);
-  for (var item of changedItems) {
-    console.log(item + " has changed:");
-    console.log("Old value: ");
-    console.log(changes[item].oldValue);
-    console.log("New value: ");
-    console.log(changes[item].newValue);
-    //createContextMenu();
-    browser.extension.getBackgroundPage(function (page) {
-      page.createContextMenu();
-    });
-  }
-}
-browser.storage.onChanged.addListener(logStorageChange);
-*/
