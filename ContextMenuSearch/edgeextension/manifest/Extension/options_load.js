@@ -1,1 +1,4 @@
-window.addEventListener("load", load);
+window.addEventListener("load", function() {
+    init();
+    load();
+});

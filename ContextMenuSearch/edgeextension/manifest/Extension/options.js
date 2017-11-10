@@ -28,7 +28,7 @@ function addRow(_title, _url) {
   var temp =
     '<td><input class="table-title" type="text" name="title" value="' + __title + '" /></td>'
     + '<td><input class="table-url" type="text" name="url" value="' + __url + '" /></td>'
-    + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' + rowNumber 
+    + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' + rowNumber
     + '</button></td>';
   newRow.insertAdjacentHTML('afterbegin', temp);
   newRow.setAttribute("id", "rowId=" + rowNumber);
@@ -47,21 +47,20 @@ function delRow(rowId) {
   var rowRef = document.getElementById(rowId); //'rowId=' + rowId);
   tableRef.deleteRow(rowRef.rowIndex);
 }
+
 function save() {
   var tableRef = document.getElementById('table');//.getElementsByTagName('tr')[1];
   var json = html2json(tableRef.innerHTML);
   console.log('***save data***');
   console.log(JSON.stringify(json));
-  //if (window.localStorage) {
-    window.localStorage.data = JSON.stringify(json);
-  //}
-  var getting = browser.runtime.getBackgroundPage(onGot);
+  window.localStorage.setItem('data', JSON.stringify(json));
+  //var getting = browser.runtime.getBackgroundPage(bgpage);
 }
-
-function onGot(page) {
+/*
+function bgpage(page) {
   page.createContextMenu();
 }
-
+*/
 function load() {
   console.log('***load data***');
   var data;
@@ -69,23 +68,65 @@ function load() {
     data = JSON.parse(window.localStorage.data);
     var html = json2html(data);
     //console.log(html);
-    var tableRef = document.getElementById('table');
-    var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-    tableRef.removeChild(tbodyRef);
+    remove_table_row();
     tableRef.insertAdjacentHTML('afterbegin', html);
   } else {
-    var _title;
-    var _url;
-    for (var ix = 0; ix < default_options.length; ix++) {
-      _title = default_options[ix][0];
-      _url = default_options[ix][1];
-      addRow(_title, _url);
-    }
+    remove_table_row();
+    load_defaults();
   }
+}
+
+function remove_table_row() {
+  console.log("remove_table_row");
+  var tableRef = document.getElementById('table');
+  var rowRef = document.getElementById('table').getElementsByTagName('TBODY')[0];
+  var stack = [];
+  var elm = rowRef.firstElementChild;
+  while (elm) {
+    //console.log("element=" + elm.tagName);
+    if (elm.tagName=='TR'){ 
+      //console.log("***"+elm.id);
+      if (elm.id.startsWith('rowId=')){
+        stack.push(elm);
+      }
+    }
+    elm = elm.nextSibling;
+  }
+  while((elm = stack.pop())) {
+    elm.parentNode.removeChild(elm);
+    console.log("---"+elm.id);
+  }
+}
+
+function load_defaults() {
+  var _title;
+  var _url;
+  for (var ix = 0; ix < default_options.length; ix++) {
+    _title = default_options[ix][0];
+    _url = default_options[ix][1];
+    addRow(_title, _url);
+  }
+}
+
+function restore() {
+  console.log("***restore***");
+  if (window.localStorage.data) {
+    window.localStorage.removeItem('data');
+  }
+  //var tableRef = document.getElementById('table');
+  //var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+  //tableRef.removeChild(tbodyRef);
+  remove_table_row();
+  load_defaults();
+}
+
+function init() {
   var btn1 = document.getElementById('add-row-btn');
   btn1.addEventListener("click", function () {
     addRow('', '')
   });
   var btn2 = document.getElementById('save-btn');
   btn2.addEventListener("click", save);
+  var btn3 = document.getElementById('restore-btn');
+  btn3.addEventListener("click", restore);
 }
