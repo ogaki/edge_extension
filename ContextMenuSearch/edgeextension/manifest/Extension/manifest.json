@@ -10,7 +10,7 @@
     },
     "options_page" : "options.html",
     "background": {
-        "page": "background.html",
+        "scripts": ["background.js"],
         "persistent": false
     },
     "permissions": [
