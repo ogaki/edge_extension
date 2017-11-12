@@ -25,7 +25,7 @@ function addRow(chk, title, url) {
     + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' + rowNumber
     + '</button></td>';
   if (String(chk) == 'ON') {
-    temp = temp.replace('##check', 'check');
+    temp = temp.replace('##check', 'checked');
   } else {
     temp = temp.replace('##check', '');
   }
