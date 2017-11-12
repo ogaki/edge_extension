@@ -19,7 +19,7 @@ function addRow(chk, title, url) {
   }
   var rowNumber = btn_id[0] + 1;
   var temp =
-    '<td><input class="table-chk-box" type="checkbox" id="chk_' + rowNumber + '" value="' + String(chk) + '" ##checked /></td>'
+    '<td><input class="table-chk-box" type="checkbox" id="chk_' + rowNumber + '" value="' + String(chk) + '" ##check /></td>'
     + '<td><input class="table-title" type="text" name="title" value="' + String(title) + '" /></td>'
     + '<td><input class="table-url" type="text" name="url" value="' + String(url) + '" /></td>'
     + '<td><button class="table-del-btn" id="btn_' + rowNumber + '">-' + rowNumber
