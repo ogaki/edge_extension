@@ -7,24 +7,26 @@
   <link rel="stylesheet" href="options.css">
   <script type="text/javascript" src="./libs/html2json.js"></script>
   <script type="text/javascript" src="./libs/htmlparser.js"></script>
+  <script type="text/javascript" src="defaults.js"></script>
   <script type="text/javascript" src="options.js"></script>
 </head>
 
 <body>
   <h1>Search Engine Setting</h1>
 
-  <button id="add-row-btn" class="table-button">+</button>
+  <button id="add-row-btn" class="table-add-btn">+</button>
   
   <table id="table">
     <tr>
+      <th></th>
       <th style="width:200px">Title</th>
       <th style="width:300px">URL</th>
-      <th style="width:20px"></th>
+      <th></th>
     </tr>
   </table>
 
-  <button id="save-btn">Save</button>
-  <button id="restore-btn">Restore</button>
+  <button id="save-btn" class="table-button">Save</button>
+  <button id="restore-btn" class="table-button">Restore</button>
   
   <script type="text/javascript" src="options_load.js"></script>
 
