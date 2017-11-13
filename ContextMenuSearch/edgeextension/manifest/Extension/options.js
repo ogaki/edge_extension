@@ -82,8 +82,10 @@ function save() {
   }
   data = data.substr(0, data.length - 1) + ']';
   console.log(data);
-  window.localStorage.clear();
-  window.localStorage.setItem('data', data);
+  localStorage.removeItem('data');
+  localStorage.setItem('data', data);
+  sessionStorage.removeItem('data');
+  sessionStorage.setItem('data', data);
   browser.runtime.getBackgroundPage(bgpage);
 }
 
@@ -94,8 +96,8 @@ function bgpage(page) {
 
 function load() {
   console.log('***load data***');
-  if (window.localStorage.data) {
-    var data = JSON.parse(window.localStorage.getItem('data'));
+  if (localStorage.data) {
+    var data = JSON.parse(localStorage.getItem('data'));
     var _chk, _title, _url;
     for (var ix = 0; ix < data.length; ix++) {
       _chk = data[ix][0];
@@ -144,8 +146,8 @@ function load_defaults() {
 
 function restore() {
   console.log("***restore***");
-  if (window.localStorage.data) {
-    window.localStorage.removeItem('data');
+  if (localStorage.data) {
+    localStorage.removeItem('data');
   }
   remove_table_row();
   load_defaults();

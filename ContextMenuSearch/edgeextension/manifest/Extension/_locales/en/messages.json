@@ -1,14 +1,5 @@
 {
     "title": {
-        "message": "Web Search: "
-    },
-    "title_google": {
-        "message": "Google"
-    },
-    "title_bing": {
-        "message": "Bing"
-    },
-    "title_duckduckgo": {
-        "message": "DuckDuckGo"
+        "message": " Search"
     }
 }

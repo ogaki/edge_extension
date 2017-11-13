@@ -1,14 +1,5 @@
 {
     "title": {
-        "message": "Webで検索: "
-    },
-    "title_google": {
-        "message": "Google"
-    },
-    "title_bing": {
-        "message": "Bing"
-    },
-    "title_duckduckgo": {
-        "message": "DuckDuckGo"
+        "message": "で検索"
     }
 }

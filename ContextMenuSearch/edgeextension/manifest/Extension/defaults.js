@@ -3,7 +3,7 @@ var default_options = [
     ['ON','bing', 'https://www.bing.com/search?q=%s'],
     ['ON','duckduckgo', 'https://www.duckduckgo.com/?q=%s']];
 
-var ite_results = [];
+//var ite_results = [];
 
 /* function iterate(obj, stack) {
     for (var property in obj) {
