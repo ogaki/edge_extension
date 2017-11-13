@@ -77,8 +77,8 @@ function save() {
     if (cell_3[0] && cell_3[0].value) { opt.push(cell_3[0].value); }
   }
   var data = '[';
-  for (let i = 0; i < opt.length; i++) {
-    data += '"' + opt[i] + '",'
+  for (let i = 0; i < opt.length; i+=3) {
+    data += '["' + opt[i] + '","'+ opt[i+1] + '","'+ opt[i+2] + '"],'
   }
   data = data.substr(0, data.length - 1) + ']';
   console.log(data);
@@ -97,10 +97,10 @@ function load() {
   if (window.localStorage.data) {
     var data = JSON.parse(window.localStorage.getItem('data'));
     var _chk, _title, _url;
-    for (var ix = 0; ix < data.length; ix += 3) {
-      _chk = data[ix];
-      _title = data[ix + 1];
-      _url = data[ix + 2];
+    for (var ix = 0; ix < data.length; ix++) {
+      _chk = data[ix][0];
+      _title = data[ix][1];
+      _url = data[ix][2];
       addRow(_chk, _title, _url);
     }
   } else {

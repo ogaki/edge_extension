@@ -1,7 +1,10 @@
-var results = [];
+//var results = [];
 
 function init() {
     console.log("***background.js init***");
+    var options;
+    if (!window.localStorage.data) {
+    }
     createContextMenu();
 }
 
@@ -11,15 +14,17 @@ function removeContextMenu() {
 
 function createContextMenu() {
     console.log("***create contextmenu***");
-    var data;
-    var options = [];
-    if ((data = window.localStorage.data)) {
-        options = data;
+    var options;
+    if (window.localStorage.data) {
+        options = JSON.parse(window.localStorage.getItem('data'));
+    } else{
+        console.log('no localstorage');
+        return;
     }
     console.log(options);
-    if (options.length == 0) {
-        options = default_options;
-    }
+    // if (!options || options.length == 0) {
+    //     options = default_options;
+    // }
     var _chk, _title;
     for (var ix = 0; ix < options.length; ix++) {
         _chk = options[ix][0];

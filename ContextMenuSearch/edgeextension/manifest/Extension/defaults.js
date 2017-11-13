@@ -5,7 +5,7 @@ var default_options = [
 
 var ite_results = [];
 
-function iterate(obj, stack) {
+/* function iterate(obj, stack) {
     for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
             if (typeof obj[property] == "object") {
@@ -19,3 +19,4 @@ function iterate(obj, stack) {
         }
     }
 }
+ */
