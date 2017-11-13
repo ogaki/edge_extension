@@ -68,7 +68,7 @@ function save() {
   var rowRef = document.getElementById('table').getElementsByTagName('TR');
   var cell_1, cell_2, cell_3;
   var opt = [];
-  for (let i = 0; i < rowRef.length; i++) {
+  for (var i = 0; i < rowRef.length; i++) {
     cell_1 = rowRef[i].getElementsByClassName('table-chk-box');
     cell_2 = rowRef[i].getElementsByClassName('table-title');
     cell_3 = rowRef[i].getElementsByClassName('table-url');
@@ -77,21 +77,22 @@ function save() {
     if (cell_3[0] && cell_3[0].value) { opt.push(cell_3[0].value); }
   }
   var data = '[';
-  for (let i = 0; i < opt.length; i+=3) {
+  for (var i = 0; i < opt.length; i+=3) {
     data += '["' + opt[i] + '","'+ opt[i+1] + '","'+ opt[i+2] + '"],'
   }
   data = data.substr(0, data.length - 1) + ']';
   console.log(data);
   localStorage.removeItem('data');
   localStorage.setItem('data', data);
-  sessionStorage.removeItem('data');
-  sessionStorage.setItem('data', data);
   browser.runtime.getBackgroundPage(bgpage);
 }
 
 function bgpage(page) {
-  page.removeContextMenu();
-  page.createContextMenu();
+  var data;
+  if (localStorage.data) {
+    data = JSON.parse(localStorage.getItem('data'));
+  }
+  page.update(data);
 }
 
 function load() {
