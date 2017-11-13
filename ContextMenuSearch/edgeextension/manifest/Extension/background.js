@@ -1,5 +1,17 @@
 var options;
 
+function defaultOptJSON() {
+    var opt = '[';
+    for (var i = 0; i < default_options.length; i++) {
+        opt += '["' + default_options[i][0]
+            + '","' + default_options[i][1]
+            + '","' + default_options[i][2]
+            + '"],';
+    }
+    opt = opt.substring(0, opt.length - 1) + ']';
+    return opt;
+}
+
 function init() {
     console.log("***background.js init***");
     //var options;
@@ -7,24 +19,20 @@ function init() {
         options = JSON.parse(localStorage.getItem('data'));
     } else {
         console.log("no localstorage.data - set default");
-        var opt = '[';
-        for (var i = 0; i < default_options.length; i++) {
-            opt += '["' + default_options[i][0]
-                + '","' + default_options[i][1]
-                + '","' + default_options[i][2]
-                + '"],';
-        }
-        options = opt.substring(0, opt.length - 1) + ']';
+        options = default_options;
+        var json = defaultOptJSON();
         localStorage.removeItem('data');
-        localStorage.setItem('data', options);
+        localStorage.setItem('data', json);
     }
     console.log(options);
     createContextMenu();
 }
 
-function update(update_options) {
+function update(optJSON) {
     browser.contextMenus.removeAll();
-    options = update_options;
+    options = JSON.parse(optJSON);
+    localStorage.removeItem('data');
+    localStorage.setItem('data', optJSON);
     createContextMenu();
 }
 

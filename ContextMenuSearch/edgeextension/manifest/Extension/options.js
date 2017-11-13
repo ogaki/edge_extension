@@ -76,23 +76,22 @@ function save() {
     if (cell_2[0] && cell_2[0].value) { opt.push(cell_2[0].value); }
     if (cell_3[0] && cell_3[0].value) { opt.push(cell_3[0].value); }
   }
-  var data = '[';
+  var json = '[';
   for (var i = 0; i < opt.length; i+=3) {
-    data += '["' + opt[i] + '","'+ opt[i+1] + '","'+ opt[i+2] + '"],'
+    json += '["' + opt[i] + '","'+ opt[i+1] + '","'+ opt[i+2] + '"],'
   }
-  data = data.substr(0, data.length - 1) + ']';
-  console.log(data);
+  json = json.substr(0, json.length - 1) + ']';
+  console.log(json);
   localStorage.removeItem('data');
-  localStorage.setItem('data', data);
+  localStorage.setItem('data', json);
   browser.runtime.getBackgroundPage(bgpage);
 }
 
 function bgpage(page) {
-  var data;
   if (localStorage.data) {
-    data = JSON.parse(localStorage.getItem('data'));
+    var json = localStorage.getItem('data');
+    page.update(json);
   }
-  page.update(data);
 }
 
 function load() {
