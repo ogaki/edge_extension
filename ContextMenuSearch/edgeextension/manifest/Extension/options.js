@@ -67,15 +67,20 @@ function save() {
   console.log('***save data***');
   var rowRef = document.getElementById('table').getElementsByTagName('TR');
   var cell_1, cell_2, cell_3;
-  var data = [];
+  var opt = [];
   for (let i = 0; i < rowRef.length; i++) {
     cell_1 = rowRef[i].getElementsByClassName('table-chk-box');
     cell_2 = rowRef[i].getElementsByClassName('table-title');
     cell_3 = rowRef[i].getElementsByClassName('table-url');
-    if (cell_1[0] && cell_1[0].value) { data.push(cell_1[0].value); }
-    if (cell_2[0] && cell_2[0].value) { data.push(cell_2[0].value); }
-    if (cell_3[0] && cell_3[0].value) { data.push(cell_3[0].value); }
+    if (cell_1[0] && cell_1[0].value) { opt.push(cell_1[0].value); }
+    if (cell_2[0] && cell_2[0].value) { opt.push(cell_2[0].value); }
+    if (cell_3[0] && cell_3[0].value) { opt.push(cell_3[0].value); }
   }
+  var data = '[';
+  for (let i = 0; i < opt.length; i++) {
+    data += '"' + opt[i] + '",'
+  }
+  data = data.substr(0, data.length - 1) + ']';
   console.log(data);
   window.localStorage.clear();
   window.localStorage.setItem('data', data);
