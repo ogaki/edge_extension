@@ -1,17 +1,10 @@
 var options;
 
-function defaultOptJSON() {
-    var opt = '[';
-    for (var i = 0; i < default_options.length; i++) {
-        opt += '["' + default_options[i][0]
-            + '","' + default_options[i][1]
-            + '","' + default_options[i][2]
-            + '"],';
-    }
-    opt = opt.substring(0, opt.length - 1) + ']';
-    return opt;
-}
-
+//browser.runtime.onInstalled.addListener(function() {
+//    console.log(details.reason);
+    init();
+//});
+  
 function init() {
     console.log("***background.js init***");
     //var options;
@@ -27,6 +20,20 @@ function init() {
     console.log(options);
     createContextMenu();
 }
+
+
+function defaultOptJSON() {
+    var opt = '[';
+    for (var i = 0; i < default_options.length; i++) {
+        opt += '["' + default_options[i][0]
+            + '","' + default_options[i][1]
+            + '","' + default_options[i][2]
+            + '"],';
+    }
+    opt = opt.substring(0, opt.length - 1) + ']';
+    return opt;
+}
+
 
 function update(optJSON) {
     browser.contextMenus.removeAll();
