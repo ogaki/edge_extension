@@ -1,10 +1,11 @@
 var options;
+//const parentId = 'contextMenuSearch';
 
 //browser.runtime.onInstalled.addListener(function() {
 //    console.log(details.reason);
     init();
 //});
-  
+
 function init() {
     console.log("***background.js init***");
     //var options;
@@ -62,7 +63,7 @@ function createContextMenu() {
             console.log("contextMenu:" + _title);
             browser.contextMenus.create({
                 id: '' + i,
-                title: _title + browser.i18n.getMessage("title"),
+                title: _title + browser.i18n.getMessage("searchfor"),
                 contexts: ['selection']
             }, onCreated);
         }

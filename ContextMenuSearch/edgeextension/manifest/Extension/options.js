@@ -1,3 +1,9 @@
+window.addEventListener("load", function() {
+  init();
+  load();
+});
+
+
 function addRow(chk, title, url) {
   console.log("***addRow: " + chk + ' ' + title + ' ' + url);
   var tableRef = document.getElementById('table');
