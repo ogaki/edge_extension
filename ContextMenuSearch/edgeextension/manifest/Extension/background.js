@@ -60,7 +60,7 @@ function createContextMenu() {
         if (_chk == 'ON') {
             // _contextMenu(i);
             _title = options[i][1];
-            console.log("contextMenu:" + _title);
+            console.log("contextMenu:" + _title + browser.i18n.getMessage("searchfor"));
             browser.contextMenus.create({
                 id: '' + i,
                 title: _title + browser.i18n.getMessage("searchfor"),
